@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Unit Converter</title>
+        <link rel="stylesheet" href="style.css">
+    <body>
+        <div class="container">
+            <h1>Unit Converter</h1>
+
+            <div class="unit-tabs">
+                <div class="unit-tab active" data-tab="distance">Jarak</div>
+                <div class="unit-tab" data-tab="weight">Berat</div>
+                <div class="unit-tab" data-tab="temperature">Suhu</div>
+            </div>
+            
+            <div class="converter-container active" id="distance-converter">
+                <div class="input-group">
+                    <label for="distanceValue">Nilai</label>
+                    <input type="number" id="distanceValue" placeholder="Masukkan Nilai..." step="any">
+                </div>
+
+                <div class="input-group">
+                    <label for="distanceFromUnit">Dari</label>
+                    <select id="distanceFromUnit">
+                        <option value="km">Kilometer</option>
+                        <option value="mi">Mil</option>
+                        <option value="m">Meter</option>
+                        <option value="cm">Sentimeter</option>
+                        <option value="mm">Milimeter</option>
+                        <option value="in">Inci</option>
+                        <option value="ft">Kaki</option>
+                        <option value="yd">Yard</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="distanceToUnit">Ke</label>
+                    <select id="distanceToUnit">
+                        <option value="km">Kilometer</option>
+                        <option value="mi">Mil</option>
+                        <option value="m">Meter</option>
+                        <option value="cm">Sentimeter</option>
+                        <option value="mm">Milimeter</option>
+                        <option value="in">Inci</option>
+                        <option value="ft">Kaki</option>
+                        <option value="yd">Yard</option>
+                    </select>
+                </div>
+
+                <div class="precision-control">
+                    <label for="distancePrecision">Penempatan Desimal:</label>
+                    <input type="number" id="distancePrecision" value="4" min="0" max="10">
+                </div>
+
+                <button class="btn" onclick="convert('distance')">Konversi</button>
+
+                <div class="result-container">
+                    <div class="result" id="distanceResult">Hasil akan tampil di sini</div>
+                    <button class="copy-btn" onclick="copyResult('distanceResult')">Salin</button>
+                </div>
+
+                <div class="history">
+                    <h3>Riwayat Konversi</h3>
+                    <div id="distanceHistory"></div>
+                </div>
+            </div>
+
+            <div class="converter-container" id="weight-converter">
+                <div class="input-group">
+                    <label for="weightValue">Nilai</label>
+                    <input type="number" id="weightValue" placeholder="Masukkan Nilai..." step="any">
+                </div>
+
+                <div class="input-group">
+                    <label for="weightFromUnit">Dari</label>
+                    <select id="weightFromUnit">
+                        <option value="kg">Kilogram</option>
+                        <option value="g">Gram</option>
+                        <option value="mg">Miligram</option>
+                        <option value="lb">Pon</option>
+                        <option value="oz">Ons</option>
+                        <option value="st">Stone</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="weightToUnit">Ke</label>
+                    <select id="weightToUnit">
+                        <option value="kg">Kilogram</option>
+                        <option value="g">Gram</option>
+                        <option value="mg">Miligram</option>
+                        <option value="lb" selected>Pon</option>
+                        <option value="oz">Ons</option>
+                        <option value="st">Stone</option>
+                    </select>
+                </div>
+
+                <div class="precision-control">
+                    <label for="weightPrecision">Penempatan Desimal:</label>
+                    <input type="number" id="weightPrecision" value="4" min="0" max="10">
+                </div>
+
+                <button class="btn" onclick="convert('weight')">Konversi</button>
+
+                <div class="result-container">
+                    <div class="result" id="weightResult">Hasil akan tampil di sini</div>
+                    <button class="copy-btn" onclick="copyResult('weightResult')">Salin</button>
+                </div>
+
+                <div class="history">
+                    <h3>Riwayat Konversi</h3>
+                    <div id="weightHistory"></div>
+                </div>
+            </div>
+
+            <div class="converter-container" id="temperature-converter">
+                <div class="input-group">
+                    <label for="temperatureValue">Nilai</label>
+                    <input type="number" id="temperatureValue" placeholder="Masukkan Nilai..." step="any">
+                </div>
+
+                <div class="input-group">
+                    <label for="temperatureFromUnit">Dari</label>
+                    <select id="temperatureFromUnit">
+                        <option value="c">Celsius</option>
+                        <option value="f">Fahrenheit</option>
+                        <option value="k">Kelvin</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="temperatureToUnit">Ke</label>
+                    <select id="temperatureToUnit">
+                        <option value="c">Celsius</option>
+                        <option value="f">Fahrenheit</option>
+                        <option value="k">Kelvin</option>
+                    </select>
+                </div>
+
+                <div class="precision-control">
+                    <label for="temperaturePrecision">Penempatan Desimal:</label>
+                    <input type="number" id="temperaturePrecision" value="4" min="0" max="10">
+                </div>
+
+                <button class="btn" onclick="convert('temperature')">Konversi</button>
+
+                <div class="result-container">
+                    <div class="result" id="temperatureResult">Hasil akan tampil di sini</div>
+                    <button class="copy-btn" onclick="copyResult('temperatureResult')">Salin</button>
+                </div>
+
+                <div class="history">
+                    <h3>Riwayat Konversi</h3>
+                    <div id="temperatureHistory"></div>
+                </div>
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+    </body>
+</html>

@@ -1,0 +1,210 @@
+:root {
+    --primary: #3498db;
+    --secondary: #2980b9;
+    --success: #2ecc71;
+    --light: #ecf0f1;
+    --dark: #34495e;
+    --danger: #e74c3c;
+    --radius: 8px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #74ebd5, #acb6e5);
+    min-height: 100vh;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background-color: white;
+    border-radius: var(--radius);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    padding: 2rem;
+}
+
+h1 {
+    color: var(--dark);
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background-color: var(--primary);
+    border-radius: 2px;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--dark);
+    font-weight: 500;
+}
+
+select, input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #ddd;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+select:focus, input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.btn {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: var(--secondary);
+}
+
+.result-container {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: var(--light);
+    border-radius: var(--radius);
+    position: relative;
+}
+
+.result {
+    font-size: 1.2rem;
+    color: var(--dark);
+    text-align: center;
+    font-weight: 500;
+}
+
+.history {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: var(--light);
+    border-radius: var(--radius);
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.history h3 {
+    margin-bottom: 0.5rem;
+    color: var(--dark);
+    font-size: 1rem;
+}
+
+.history-item {
+    padding: 0.5rem;
+    background-color: white;
+    border-radius: calc(var(--radius) - 2px);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    border-left: 3px solid var(--primary);
+}
+
+.copy-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--dark);
+    font-size: 0.8rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius);
+    transition: background-color 0.3s;
+}
+
+.copy-btn:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.precision-control {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.precision-control label {
+    margin-right: 1rem;
+    margin-bottom: 0;
+}
+
+.precision-control input {
+    width: 60px;
+}
+
+.unit-tabs {
+    display: flex;
+    margin-bottom: 1rem;
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.unit-tab {
+    flex: 1;
+    padding: 0.75rem;
+    text-align: center;
+    background-color: #ddd;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.unit-tab.active {
+    background-color: var(--primary);
+    color: white;
+    font-weight: 500;
+}
+
+.converter-container {
+    display: none;
+}
+
+.converter-container.active {
+    display: block;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+}
