@@ -456,3 +456,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// Just a fun little script to randomize the fun meter on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const funMeter = document.querySelector('.fun-meter-fill');
+    const funLabel = document.querySelector('.fun-meter-label');
+    const randomFun = Math.floor(Math.random() * 20) + 75; // Between 75-95%
+    
+    setTimeout(() => {
+      funMeter.style.width = randomFun + '%';
+      funLabel.textContent = `Fun Level: ${randomFun}% (The other ${100-randomFun}% is debugging)`;
+    }, 500);
+  });
