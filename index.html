@@ -3,50 +3,80 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="theme-color" content="#74ebd5">
+        <meta name="description" content="Unit Converter - Convert between distance, weight, temperature, area, and volume units">
         <title>Unit Converter</title>
         <link rel="stylesheet" href="style.css">
+        <link rel="manifest" href="manifest.json">
+        <link rel="icon" type="image/png" href="favicon.png">
+    </head>
     <body>
         <div class="container">
-            <h1>Unit Converter</h1>
+            <header>
+                <h1>Unit Converter</h1>
+                <div class="theme-toggle-container">
+                    <label class="theme-switch">
+                        <input type="checkbox" id="themeToggle" onchange="toggleTheme()">
+                        <span class="slider round"></span>
+                        <span class="theme-icon light">☀️</span>
+                        <span class="theme-icon dark">🌙</span>
+                    </label>
+                </div>
+            </header>
 
             <div class="unit-tabs">
                 <div class="unit-tab active" data-tab="distance">Jarak</div>
                 <div class="unit-tab" data-tab="weight">Berat</div>
                 <div class="unit-tab" data-tab="temperature">Suhu</div>
+                <div class="unit-tab" data-tab="area">Luas</div>
+                <div class="unit-tab" data-tab="volume">Volume</div>
             </div>
             
+            <!-- Distance Converter -->
             <div class="converter-container active" id="distance-converter">
                 <div class="input-group">
                     <label for="distanceValue">Nilai</label>
                     <input type="number" id="distanceValue" placeholder="Masukkan Nilai..." step="any">
                 </div>
 
-                <div class="input-group">
-                    <label for="distanceFromUnit">Dari</label>
-                    <select id="distanceFromUnit">
-                        <option value="km">Kilometer</option>
-                        <option value="mi">Mil</option>
-                        <option value="m">Meter</option>
-                        <option value="cm">Sentimeter</option>
-                        <option value="mm">Milimeter</option>
-                        <option value="in">Inci</option>
-                        <option value="ft">Kaki</option>
-                        <option value="yd">Yard</option>
-                    </select>
-                </div>
+                <div class="units-row">
+                    <div class="input-group">
+                        <label for="distanceFromUnit">Dari</label>
+                        <select id="distanceFromUnit">
+                            <option value="km">Kilometer</option>
+                            <option value="m">Meter</option>
+                            <option value="cm">Sentimeter</option>
+                            <option value="mm">Milimeter</option>
+                            <option value="µm">Mikrometer</option>
+                            <option value="nm">Nanometer</option>
+                            <option value="mi">Mil</option>
+                            <option value="nmi">Mil Laut</option>
+                            <option value="yd">Yard</option>
+                            <option value="ft">Kaki</option>
+                            <option value="in">Inci</option>
+                        </select>
+                    </div>
 
-                <div class="input-group">
-                    <label for="distanceToUnit">Ke</label>
-                    <select id="distanceToUnit">
-                        <option value="km">Kilometer</option>
-                        <option value="mi">Mil</option>
-                        <option value="m">Meter</option>
-                        <option value="cm">Sentimeter</option>
-                        <option value="mm">Milimeter</option>
-                        <option value="in">Inci</option>
-                        <option value="ft">Kaki</option>
-                        <option value="yd">Yard</option>
-                    </select>
+                    <button class="swap-btn" onclick="swapUnits('distance')" aria-label="Tukar Unit">
+                        <span class="swap-icon">⇄</span>
+                    </button>
+
+                    <div class="input-group">
+                        <label for="distanceToUnit">Ke</label>
+                        <select id="distanceToUnit">
+                            <option value="km">Kilometer</option>
+                            <option value="m" selected>Meter</option>
+                            <option value="cm">Sentimeter</option>
+                            <option value="mm">Milimeter</option>
+                            <option value="µm">Mikrometer</option>
+                            <option value="nm">Nanometer</option>
+                            <option value="mi">Mil</option>
+                            <option value="nmi">Mil Laut</option>
+                            <option value="yd">Yard</option>
+                            <option value="ft">Kaki</option>
+                            <option value="in">Inci</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="precision-control">
@@ -54,7 +84,10 @@
                     <input type="number" id="distancePrecision" value="4" min="0" max="10">
                 </div>
 
-                <button class="btn" onclick="convert('distance')">Konversi</button>
+                <div class="button-group">
+                    <button class="btn convert-btn" onclick="convert('distance')">Konversi</button>
+                    <button class="btn clear-btn" onclick="clearInputs('distance')">Bersihkan</button>
+                </div>
 
                 <div class="result-container">
                     <div class="result" id="distanceResult">Hasil akan tampil di sini</div>
@@ -62,39 +95,55 @@
                 </div>
 
                 <div class="history">
-                    <h3>Riwayat Konversi</h3>
-                    <div id="distanceHistory"></div>
+                    <div class="history-header">
+                        <h3>Riwayat Konversi</h3>
+                        <button class="clear-history-btn" onclick="clearHistory('distance')">Bersihkan</button>
+                    </div>
+                    <div id="distanceHistory" class="history-list"></div>
                 </div>
             </div>
 
+            <!-- Weight Converter -->
             <div class="converter-container" id="weight-converter">
                 <div class="input-group">
                     <label for="weightValue">Nilai</label>
                     <input type="number" id="weightValue" placeholder="Masukkan Nilai..." step="any">
                 </div>
 
-                <div class="input-group">
-                    <label for="weightFromUnit">Dari</label>
-                    <select id="weightFromUnit">
-                        <option value="kg">Kilogram</option>
-                        <option value="g">Gram</option>
-                        <option value="mg">Miligram</option>
-                        <option value="lb">Pon</option>
-                        <option value="oz">Ons</option>
-                        <option value="st">Stone</option>
-                    </select>
-                </div>
+                <div class="units-row">
+                    <div class="input-group">
+                        <label for="weightFromUnit">Dari</label>
+                        <select id="weightFromUnit">
+                            <option value="t">Ton</option>
+                            <option value="kg">Kilogram</option>
+                            <option value="g">Gram</option>
+                            <option value="mg">Miligram</option>
+                            <option value="lb">Pon</option>
+                            <option value="oz">Ons</option>
+                            <option value="st">Stone</option>
+                            <option value="ct">Karat</option>
+                            <option value="gr">Grain</option>
+                        </select>
+                    </div>
 
-                <div class="input-group">
-                    <label for="weightToUnit">Ke</label>
-                    <select id="weightToUnit">
-                        <option value="kg">Kilogram</option>
-                        <option value="g">Gram</option>
-                        <option value="mg">Miligram</option>
-                        <option value="lb" selected>Pon</option>
-                        <option value="oz">Ons</option>
-                        <option value="st">Stone</option>
-                    </select>
+                    <button class="swap-btn" onclick="swapUnits('weight')" aria-label="Tukar Unit">
+                        <span class="swap-icon">⇄</span>
+                    </button>
+
+                    <div class="input-group">
+                        <label for="weightToUnit">Ke</label>
+                        <select id="weightToUnit">
+                            <option value="t">Ton</option>
+                            <option value="kg" selected>Kilogram</option>
+                            <option value="g">Gram</option>
+                            <option value="mg">Miligram</option>
+                            <option value="lb">Pon</option>
+                            <option value="oz">Ons</option>
+                            <option value="st">Stone</option>
+                            <option value="ct">Karat</option>
+                            <option value="gr">Grain</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="precision-control">
@@ -102,7 +151,10 @@
                     <input type="number" id="weightPrecision" value="4" min="0" max="10">
                 </div>
 
-                <button class="btn" onclick="convert('weight')">Konversi</button>
+                <div class="button-group">
+                    <button class="btn convert-btn" onclick="convert('weight')">Konversi</button>
+                    <button class="btn clear-btn" onclick="clearInputs('weight')">Bersihkan</button>
+                </div>
 
                 <div class="result-container">
                     <div class="result" id="weightResult">Hasil akan tampil di sini</div>
@@ -110,33 +162,43 @@
                 </div>
 
                 <div class="history">
-                    <h3>Riwayat Konversi</h3>
-                    <div id="weightHistory"></div>
+                    <div class="history-header">
+                        <h3>Riwayat Konversi</h3>
+                        <button class="clear-history-btn" onclick="clearHistory('weight')">Bersihkan</button>
+                    </div>
+                    <div id="weightHistory" class="history-list"></div>
                 </div>
             </div>
 
+            <!-- Temperature Converter -->
             <div class="converter-container" id="temperature-converter">
                 <div class="input-group">
                     <label for="temperatureValue">Nilai</label>
                     <input type="number" id="temperatureValue" placeholder="Masukkan Nilai..." step="any">
                 </div>
 
-                <div class="input-group">
-                    <label for="temperatureFromUnit">Dari</label>
-                    <select id="temperatureFromUnit">
-                        <option value="c">Celsius</option>
-                        <option value="f">Fahrenheit</option>
-                        <option value="k">Kelvin</option>
-                    </select>
-                </div>
+                <div class="units-row">
+                    <div class="input-group">
+                        <label for="temperatureFromUnit">Dari</label>
+                        <select id="temperatureFromUnit">
+                            <option value="c">Celsius</option>
+                            <option value="f">Fahrenheit</option>
+                            <option value="k">Kelvin</option>
+                        </select>
+                    </div>
 
-                <div class="input-group">
-                    <label for="temperatureToUnit">Ke</label>
-                    <select id="temperatureToUnit">
-                        <option value="c">Celsius</option>
-                        <option value="f">Fahrenheit</option>
-                        <option value="k">Kelvin</option>
-                    </select>
+                    <button class="swap-btn" onclick="swapUnits('temperature')" aria-label="Tukar Unit">
+                        <span class="swap-icon">⇄</span>
+                    </button>
+
+                    <div class="input-group">
+                        <label for="temperatureToUnit">Ke</label>
+                        <select id="temperatureToUnit">
+                            <option value="c">Celsius</option>
+                            <option value="f" selected>Fahrenheit</option>
+                            <option value="k">Kelvin</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="precision-control">
@@ -144,7 +206,10 @@
                     <input type="number" id="temperaturePrecision" value="4" min="0" max="10">
                 </div>
 
-                <button class="btn" onclick="convert('temperature')">Konversi</button>
+                <div class="button-group">
+                    <button class="btn convert-btn" onclick="convert('temperature')">Konversi</button>
+                    <button class="btn clear-btn" onclick="clearInputs('temperature')">Bersihkan</button>
+                </div>
 
                 <div class="result-container">
                     <div class="result" id="temperatureResult">Hasil akan tampil di sini</div>
@@ -152,11 +217,152 @@
                 </div>
 
                 <div class="history">
-                    <h3>Riwayat Konversi</h3>
-                    <div id="temperatureHistory"></div>
+                    <div class="history-header">
+                        <h3>Riwayat Konversi</h3>
+                        <button class="clear-history-btn" onclick="clearHistory('temperature')">Bersihkan</button>
+                    </div>
+                    <div id="temperatureHistory" class="history-list"></div>
+                </div>
+            </div>
+
+            <!-- Area Converter -->
+            <div class="converter-container" id="area-converter">
+                <div class="input-group">
+                    <label for="areaValue">Nilai</label>
+                    <input type="number" id="areaValue" placeholder="Masukkan Nilai..." step="any">
+                </div>
+
+                <div class="units-row">
+                    <div class="input-group">
+                        <label for="areaFromUnit">Dari</label>
+                        <select id="areaFromUnit">
+                            <option value="km2">Kilometer Persegi</option>
+                            <option value="m2">Meter Persegi</option>
+                            <option value="cm2">Sentimeter Persegi</option>
+                            <option value="mm2">Milimeter Persegi</option>
+                            <option value="ha">Hektar</option>
+                            <option value="acre">Acre</option>
+                            <option value="ft2">Kaki Persegi</option>
+                            <option value="in2">Inci Persegi</option>
+                            <option value="yd2">Yard Persegi</option>
+                        </select>
+                    </div>
+
+                    <button class="swap-btn" onclick="swapUnits('area')" aria-label="Tukar Unit">
+                        <span class="swap-icon">⇄</span>
+                    </button>
+
+                    <div class="input-group">
+                        <label for="areaToUnit">Ke</label>
+                        <select id="areaToUnit">
+                            <option value="km2">Kilometer Persegi</option>
+                            <option value="m2" selected>Meter Persegi</option>
+                            <option value="cm2">Sentimeter Persegi</option>
+                            <option value="mm2">Milimeter Persegi</option>
+                            <option value="ha">Hektar</option>
+                            <option value="acre">Acre</option>
+                            <option value="ft2">Kaki Persegi</option>
+                            <option value="in2">Inci Persegi</option>
+                            <option value="yd2">Yard Persegi</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="precision-control">
+                    <label for="areaPrecision">Penempatan Desimal:</label>
+                    <input type="number" id="areaPrecision" value="4" min="0" max="10">
+                </div>
+
+                <div class="button-group">
+                    <button class="btn convert-btn" onclick="convert('area')">Konversi</button>
+                    <button class="btn clear-btn" onclick="clearInputs('area')">Bersihkan</button>
+                </div>
+
+                <div class="result-container">
+                    <div class="result" id="areaResult">Hasil akan tampil di sini</div>
+                    <button class="copy-btn" onclick="copyResult('areaResult')">Salin</button>
+                </div>
+
+                <div class="history">
+                    <div class="history-header">
+                        <h3>Riwayat Konversi</h3>
+                        <button class="clear-history-btn" onclick="clearHistory('area')">Bersihkan</button>
+                    </div>
+                    <div id="areaHistory" class="history-list"></div>
+                </div>
+            </div>
+
+            <!-- Volume Converter -->
+            <div class="converter-container" id="volume-converter">
+                <div class="input-group">
+                    <label for="volumeValue">Nilai</label>
+                    <input type="number" id="volumeValue" placeholder="Masukkan Nilai..." step="any">
+                </div>
+
+                <div class="units-row">
+                    <div class="input-group">
+                        <label for="volumeFromUnit">Dari</label>
+                        <select id="volumeFromUnit">
+                            <option value="m3">Meter Kubik</option>
+                            <option value="cm3">Sentimeter Kubik</option>
+                            <option value="mm3">Milimeter Kubik</option>
+                            <option value="l">Liter</option>
+                            <option value="ml">Mililiter</option>
+                            <option value="gal">Galon</option>
+                            <option value="qt">Quart</option>
+                            <option value="pt">Pint</option>
+                            <option value="fl_oz">Ons Cair</option>
+                        </select>
+                    </div>
+
+                    <button class="swap-btn" onclick="swapUnits('volume')" aria-label="Tukar Unit">
+                        <span class="swap-icon">⇄</span>
+                    </button>
+
+                    <div class="input-group">
+                        <label for="volumeToUnit">Ke</label>
+                        <select id="volumeToUnit">
+                            <option value="m3">Meter Kubik</option>
+                            <option value="cm3">Sentimeter Kubik</option>
+                            <option value="mm3">Milimeter Kubik</option>
+                            <option value="l" selected>Liter</option>
+                            <option value="ml">Mililiter</option>
+                            <option value="gal">Galon</option>
+                            <option value="qt">Quart</option>
+                            <option value="pt">Pint</option>
+                            <option value="fl_oz">Ons Cair</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="precision-control">
+                    <label for="volumePrecision">Penempatan Desimal:</label>
+                    <input type="number" id="volumePrecision" value="4" min="0" max="10">
+                </div>
+
+                <div class="button-group">
+                    <button class="btn convert-btn" onclick="convert('volume')">Konversi</button>
+                    <button class="btn clear-btn" onclick="clearInputs('volume')">Bersihkan</button>
+                </div>
+
+                <div class="result-container">
+                    <div class="result" id="volumeResult">Hasil akan tampil di sini</div>
+                    <button class="copy-btn" onclick="copyResult('volumeResult')">Salin</button>
+                </div>
+
+                <div class="history">
+                    <div class="history-header">
+                        <h3>Riwayat Konversi</h3>
+                        <button class="clear-history-btn" onclick="clearHistory('volume')">Bersihkan</button>
+                    </div>
+                    <div id="volumeHistory" class="history-list"></div>
                 </div>
             </div>
         </div>
+
+        <footer class="footer">
+            <p>© 2025 Unit Converter | <a href="#" class="footer-link">About</a> | <a href="#" class="footer-link">Privacy</a></p>
+        </footer>
 
         <script src="script.js"></script>
     </body>
